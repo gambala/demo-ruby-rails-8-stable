@@ -1,0 +1,35 @@
+# <% require "dotenv"; Dotenv.load(".env") %>
+
+service: demo-ruby-rails-8-stable
+image: gambala/demo-ruby-rails-8-stable
+servers:
+  - <%= ENV["MAIN_SERVER_IP"] %>
+proxy:
+  ssl: false
+  host: rails-8.gambala.pro
+  app_port: 80
+  healthcheck:
+    interval: 10
+    path: /up
+registry:
+  server: ghcr.io
+  username: gambala
+  password:
+    - KAMAL_REGISTRY_PASSWORD
+volumes:
+  - "demo-ruby-rails-8-stable-storage:/rails/storage"
+asset_path: /rails/public/assets
+builder:
+  arch: arm64
+env:
+  secret:
+    - RAILS_MASTER_KEY
+  clear:
+    SOLID_QUEUE_IN_PUMA: true
+    WEB_CONCURRENCY: 1
+    # JOB_CONCURRENCY: 3
+aliases:
+  console: app exec --interactive --reuse "bin/rails console"
+  shell: app exec --interactive --reuse "bash"
+  logs: app logs -f
+  dbc: app exec --interactive --reuse "bin/rails dbconsole"
