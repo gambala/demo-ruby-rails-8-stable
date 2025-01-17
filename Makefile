@@ -2,6 +2,20 @@ CONTAINER_NAME=demo-ruby-rails-8-stable
 PORT=3000
 ID_FILE=.container_id
 
+bundle-install:
+	bundle install
+
+bi: bundle-install
+
+bundle-update-setup:
+	gem install bundle_update_interactive
+
+bundle-update:
+	bundle ui
+
+bu-setup: bundle-update-setup
+bu: bundle-update
+
 dev:
 	bin/dev
 
