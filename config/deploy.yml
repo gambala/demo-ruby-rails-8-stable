@@ -9,7 +9,6 @@ proxy:
   host: rails-8.gambala.pro
   app_port: 80
   healthcheck:
-    interval: 10
     path: /up
 registry:
   server: ghcr.io
